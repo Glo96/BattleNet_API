@@ -2,12 +2,15 @@ const state = {
   items: [],
   filter: "all",
   search: "",
+  sourceLabel: "local archive",
 };
 
 const messageList = document.getElementById("messageList");
 const statsContainer = document.getElementById("stats");
 const searchInput = document.getElementById("searchInput");
 const filterButtons = [...document.querySelectorAll(".filter-btn")];
+const refreshBtn = document.getElementById("refreshBtn");
+const sourceStatus = document.getElementById("sourceStatus");
 const template = document.getElementById("message-card-template");
 
 function escapeHtml(value) {
@@ -109,6 +112,17 @@ function renderStats(items) {
   `;
 }
 
+function updateSourceStatus(label) {
+  if (!sourceStatus) return;
+
+  sourceStatus.classList.toggle("live", label === "live endpoint");
+  sourceStatus.classList.toggle("fallback", label === "local archive");
+  sourceStatus.innerHTML = `
+    <span class="dot"></span>
+    ${label === "live endpoint" ? "Live endpoint" : "Local archive fallback"}
+  `;
+}
+
 function getVisibleItems() {
   return state.items.filter((item) => {
     const matchesFilter = state.filter === "all" || item.kind === state.filter;
@@ -151,23 +165,117 @@ function applyFilter(filter) {
   renderItems();
 }
 
-async function loadData() {
-  const response = await fetch("data/messages.json");
-  if (!response.ok) {
-    throw new Error("Could not load archive data.");
+function decodeBinaryMessage(message) {
+  if (typeof message !== "string") {
+    return null;
   }
 
-  const data = await response.json();
-  state.items = data.messages.map((item) => {
+  const tokens = message
+    .split(/\s+/)
+    .map((token) => token.trim())
+    .filter(Boolean);
+
+  if (!tokens.length || !tokens.every((token) => /^[01]+$/.test(token))) {
+    return null;
+  }
+
+  const bytes = Uint8Array.from(tokens.map((token) => parseInt(token, 2)));
+  return new TextDecoder("ascii").decode(bytes);
+}
+
+function toNormalizedItems(data) {
+  if (!data || !Array.isArray(data.messages)) {
+    throw new Error("Archive payload is empty or invalid.");
+  }
+
+  return data.messages.map((item) => {
     const kind =
       typeof item.message === "object" && item.message !== null ? "table"
       : item.decoded_ascii ? "binary"
       : "text";
     return { ...item, kind };
   });
+}
 
-  renderStats(state.items);
-  renderItems();
+async function fetchRemoteData() {
+  const response = await fetch("/api/partial-capture");
+
+  if (!response.ok) {
+    throw new Error(`Remote source responded with ${response.status}`);
+  }
+
+  const payload = await response.json();
+  const source = payload?.source || "live endpoint";
+  const messages = Array.isArray(payload?.messages) ? payload.messages : [];
+
+  if (!messages.length) {
+    throw new Error("Remote source returned no messages.");
+  }
+
+  const normalized = messages.map((message, index) => {
+    const item = {
+      id: index + 1,
+      title: `Recovered message ${index + 1}`,
+      observed_in_samples: [index + 1],
+      message,
+    };
+
+    const decoded = decodeBinaryMessage(message);
+    if (decoded) {
+      item.decoded_ascii = decoded;
+    }
+
+    return item;
+  });
+
+  return { messages: normalized, sourceLabel: source };
+}
+
+async function loadData(forceRemote = false) {
+  refreshBtn.disabled = true;
+  refreshBtn.textContent = "Зареждане...";
+
+  try {
+    let data;
+
+    if (forceRemote) {
+      try {
+        data = await fetchRemoteData();
+      } catch (remoteError) {
+        data = await fetch("data/messages.json").then(async (response) => {
+          if (!response.ok) {
+            throw new Error("Local archive is unavailable.");
+          }
+          return { ...(await response.json()), sourceLabel: "local archive" };
+        });
+      }
+    } else {
+      data = await fetch("data/messages.json")
+        .then(async (response) => {
+          if (!response.ok) {
+            throw new Error("Local archive is unavailable.");
+          }
+          return { ...(await response.json()), sourceLabel: "local archive" };
+        })
+        .catch(async () => {
+          const remote = await fetchRemoteData().catch(() => null);
+          return remote || { messages: [], sourceLabel: "local archive" };
+        });
+    }
+
+    state.items = toNormalizedItems(data);
+    state.sourceLabel = data.sourceLabel || "local archive";
+    updateSourceStatus(state.sourceLabel);
+    renderStats(state.items);
+    renderItems();
+    refreshBtn.textContent = `Обнови данни · ${state.sourceLabel}`;
+  } catch (error) {
+    updateSourceStatus("local archive");
+    messageList.innerHTML = `<div class="empty-state">${escapeHtml(error.message)}</div>`;
+    refreshBtn.textContent = "Обнови данни";
+  } finally {
+    refreshBtn.disabled = false;
+  }
 }
 
 searchInput.addEventListener("input", (event) => {
@@ -181,6 +289,8 @@ filterButtons.forEach((button) => {
   });
 });
 
-loadData().catch((error) => {
-  messageList.innerHTML = `<div class="empty-state">${escapeHtml(error.message)}</div>`;
+refreshBtn.addEventListener("click", () => {
+  loadData(true);
 });
+
+loadData();

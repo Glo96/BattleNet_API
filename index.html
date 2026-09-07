@@ -13,7 +13,7 @@
           <p class="eyebrow">SECURE ARCHIVE</p>
           <h1>StarCraft partial-capture archive</h1>
         </div>
-        <div class="status-pill">
+        <div class="status-pill" id="sourceStatus">
           <span class="dot"></span>
           30 samples / 8 unique transmissions
         </div>
@@ -40,18 +40,24 @@
           />
         </label>
 
-        <div class="filters" id="filters" aria-label="Filters">
-          <button class="filter-btn active" data-filter="all" type="button">
-            Всички
-          </button>
-          <button class="filter-btn" data-filter="text" type="button">
-            Текст
-          </button>
-          <button class="filter-btn" data-filter="binary" type="button">
-            Binary
-          </button>
-          <button class="filter-btn" data-filter="table" type="button">
-            Table
+        <div class="controls-right">
+          <div class="filters" id="filters" aria-label="Filters">
+            <button class="filter-btn active" data-filter="all" type="button">
+              Всички
+            </button>
+            <button class="filter-btn" data-filter="text" type="button">
+              Текст
+            </button>
+            <button class="filter-btn" data-filter="binary" type="button">
+              Binary
+            </button>
+            <button class="filter-btn" data-filter="table" type="button">
+              Table
+            </button>
+          </div>
+
+          <button id="refreshBtn" class="refresh-btn" type="button">
+            Обнови данни
           </button>
         </div>
       </section>
