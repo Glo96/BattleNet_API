@@ -1,0 +1,102 @@
+{
+  "source": "https://starcraft.blizzard.com/en-us/partial-capture",
+  "sample_count": 30,
+  "unique_message_count": 8,
+  "messages": [
+    {
+      "id": 1,
+      "title": "Theta Squadron arrival orders",
+      "observed_in_samples": [1, 5, 8, 10, 14, 21],
+      "message": "FROM: 1SG S████████ V█████\nSENT: 2575-08-08-2601:18\nTO: ROXARA LUNAR MINING COMPLEX – OPERATIONS\nSUBJECT: ███ THETA SQUADRON - ARRIVAL PROTOCOL\n\nCONFIDENTIAL – DO NOT SHARE\n\nATTN. ROXARA LUNAR MINING COMPLEX,\n\nTheta Squadron is en route, anticipate arrival to Roxara on\n2575-08-09-███████. A ███████████████ Freighter will arrive in advance of Theta Squadron. Prepare docking accommodations accordingly.\n\nOur work must begin immediately upon landing. Ensure the cargo manifest below is on board the ███████████████ Freighter. Failure to indicate inconsistencies will not be tolerated.\n\nTake the utmost caution when handling the crates. They are pivotal to our research. Any carelessness or mistreatment could jeopardize the success of our operation.\n\nFor the Glory of the ████████.\n\nS. V█████\n12974-S"
+    },
+    {
+      "id": 2,
+      "title": "Systems check / flagged user (binary)",
+      "observed_in_samples": [2, 5, 13, 18, 21, 25],
+      "message": "00111110 00111110 01010010 01110101 01101110 00100000 01110011\n01111001 01110011 01110100 01100101 01101101 01110011 00100000\n01100011 01101000 01100101 01100011 01101011 00101110 00100000\n00001010 00001010 00100000 00001010 00001010 00111110 01001001\n01001110 01010110 01000001 01001100 01001001 01000100 00100000\n01000011 01010010 01000101 01000100 01000101 01001110 01010100\n01001001 01000001 01001100 01010011",
+      "decoded_ascii": ">>Run systems check.\n\n\n>INVALID CREDENTIALS\n\n>>Username: 2560037-DA\n\n>>Password: XXXXXXXXXXXXXXXXXXXXXX\n\n>ERROR\n\n>USER FLAGGED\n\n>CONTACT DOMINION SERVICE DESK IMMEDIATELY"
+    },
+    {
+      "id": 3,
+      "title": "Medical record: F. C██",
+      "observed_in_samples": [2, 3, 6, 7, 11, 14, 15, 17, 26, 29],
+      "message": "███████: F. C██\nDATE: 2575-08-1104:39\nBLOOD PRESSURE: 115/75 mmHg\nHEART RATE: 72 bpm\nRESPIRATORY RATE: 13 breaths per minute\nBODY TEMPERATURE: 98.2°F\nOXYGEN SATURATION: 99% on room air\nSTATUS: ███████████████████"
+    },
+    {
+      "id": 4,
+      "title": "Medical record: T. W███████",
+      "observed_in_samples": [2, 3, 9, 10, 16, 21, 23, 25, 27, 29],
+      "message": "\n███████: T. W███████\nDATE: 2575-08-1107:14\nBLOOD PRESSURE: 110/70 mmHg\nHEART RATE: 84 bpm\nRESPIRATORY RATE: 16 breaths per minute\nBODY TEMPERATURE: 97.8°F\nOXYGEN SATURATION: 97% on room air\nSTATUS: ███████████████████"
+    },
+    {
+      "id": 5,
+      "title": "Recovered transmission log",
+      "observed_in_samples": [2, 10, 13, 19, 20, 21, 24, 26, 27],
+      "message": ">User: 2560037-DA\n>Clearance level: L Clearance\n\n>Searching communications database...\n>Transmission: recovered.\n\n>Establishing connection...\n>Connection: secured\n\n>Uploading transmission...\n>Transmission: uploaded."
+    },
+    {
+      "id": 6,
+      "title": "Cargo manifest",
+      "observed_in_samples": [3, 5, 8, 11, 16, 18, 22, 23, 27],
+      "message": {
+        "type": "table",
+        "title": "CARGO MANIFEST",
+        "rows": [
+          {
+            "SPACECRAFT DATA": "BANSHEE ███████",
+            "MISSION DATA": "ORDERS 556-217",
+            "MANIFEST ID": "X██████████",
+            "MANIFEST DESCRIPTION": "Crates ████"
+          },
+          {
+            "MANIFEST ID": "D492-12-125",
+            "MANIFEST DESCRIPTION": "███████████████"
+          },
+          {
+            "MANIFEST ID": "R812-09-234",
+            "MANIFEST DESCRIPTION": "Rations (2127)"
+          },
+          {
+            "MANIFEST ID": "G620-17-448",
+            "MANIFEST DESCRIPTION": "█████████████████"
+          },
+          {
+            "MANIFEST ID": "E632-84-306",
+            "MANIFEST DESCRIPTION": "Electronics (745)"
+          },
+          {
+            "MANIFEST ID": "X██████████",
+            "MANIFEST DESCRIPTION": "Feed █████"
+          },
+          {
+            "SPACECRAFT DATA": "ITEMS LOADED:",
+            "MISSION DATA": "4762"
+          },
+          {
+            "SPACECRAFT DATA": "ITEMS RECEIVED:"
+          },
+          {
+            "SPACECRAFT DATA": "TOTAL:"
+          },
+          {
+            "SPACECRAFT DATA": "SIGNATURE OF RECEIVING AGENT:",
+            "MISSION DATA": "DATE:"
+          }
+        ]
+      }
+    },
+    {
+      "id": 7,
+      "title": "Special order 176 inquiry (binary)",
+      "observed_in_samples": [4, 7, 12, 19, 23, 27],
+      "message": "00111110 00111110 01010010 01100101 01110001 01110101 01100101\n01110011 01110100 01101001 01101110 01100111 00100000 01101001\n01101110 01100110 01101111 01110010 01101101 01100001 01110100\n01101001 01101111 01101110 00100000 01101111 01101110 00100000\n01110011 01110000 01100101 01100011 01101001 01100001 01101100\n00100000 01101111 01110010 01100100 01100101 01110010 00100000\n00110001 00110111 00110110",
+      "decoded_ascii": ">>Requesting information on special order 176\n\n>INVALID CREDENTIALS\n\n>UNABLE TO COMPLY\n\n>>Who is involved with special order 176?\n\n>INSUFFICIENT CLEARANCE"
+    },
+    {
+      "id": 8,
+      "title": "Sensor feed: 7400_EAST",
+      "observed_in_samples": [5, 16, 23, 25, 28, 29, 30],
+      "message": ">SENSOR FEED: 7400_EAST\n>MOTION DETECTED\n>FREQUENCY: TRANSIENT MOTION PATTERN\n>OCCUPANTS REGISTERED ...... 0\n>OCCUPANTS DETECTED ........ 14\n>RECONCILING...\n>OCCUPANTS REGISTERED ...... 0\n>POWER: DEACTIVATED (POWER GRID: 2%)"
+    }
+  ]
+}

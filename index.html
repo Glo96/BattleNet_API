@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="bg">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>StarCraft Partial Capture</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">SECURE ARCHIVE</p>
+          <h1>StarCraft partial-capture archive</h1>
+        </div>
+        <div class="status-pill">
+          <span class="dot"></span>
+          30 samples / 8 unique transmissions
+        </div>
+      </header>
+
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="label">Blizzard public endpoint</p>
+          <h2>
+            Recovered mission chatter, medical records, sensor logs and cargo
+            manifests.
+          </h2>
+        </div>
+        <div class="stats" id="stats"></div>
+      </section>
+
+      <section class="toolbar">
+        <label class="search-box">
+          <span>Търсене</span>
+          <input
+            id="searchInput"
+            type="search"
+            placeholder="Търси по заглавие или текст..."
+          />
+        </label>
+
+        <div class="filters" id="filters" aria-label="Filters">
+          <button class="filter-btn active" data-filter="all" type="button">
+            Всички
+          </button>
+          <button class="filter-btn" data-filter="text" type="button">
+            Текст
+          </button>
+          <button class="filter-btn" data-filter="binary" type="button">
+            Binary
+          </button>
+          <button class="filter-btn" data-filter="table" type="button">
+            Table
+          </button>
+        </div>
+      </section>
+
+      <main>
+        <div id="messageList" class="message-list" aria-live="polite"></div>
+      </main>
+    </div>
+
+    <template id="message-card-template">
+      <article class="message-card">
+        <div class="card-header">
+          <span class="tag"></span>
+          <span class="samples"></span>
+        </div>
+        <h3></h3>
+        <div class="body"></div>
+      </article>
+    </template>
+
+    <script src="app.js"></script>
+  </body>
+</html>
